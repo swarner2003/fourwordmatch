@@ -1,9 +1,8 @@
-
 function Header(){
 
     return(
         <header>
-            <h1>Hello World!!</h1>
+            <h1>Four Connect Game!</h1>
         </header>
     );
 }
