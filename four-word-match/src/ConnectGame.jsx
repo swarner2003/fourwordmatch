@@ -6,12 +6,15 @@ function ConnectGame(){
 
     const [data, setData] = useState(null);
     const [displayArray, setdisplayArray] = useState(Array.from({ length: 16 }, (_, index) => index));
+    const [buttonColorArray, setButtonColorArray] = useState(Array.from({ length: 16 }, (_, index) => 'bg-slate-200'));
 
     //controlling revealing the answers
     const [showStraightforward, setShowStraightforward] = useState(false);
     const [showMedium, setShowMedium] = useState(false);
     const [showHard, setShowHard] = useState(false);
     const [showTrick, setShowTrick] = useState(false);
+    const [numSelect, setNumSelect] = useState(0);
+    const [selectedID, setSelectedID] = useState([]);
 
     let gameTitle = "defualt";
     let gameAuthor = "person";
@@ -25,7 +28,7 @@ function ConnectGame(){
         }
     };
 
-    const showAnswer = (answerId) => {
+    const showAnswer = async (answerId) => {
         switch (answerId) {
             case 0:
                 setShowStraightforward(true);
@@ -42,6 +45,36 @@ function ConnectGame(){
             default:
                 setShowStraightforward(true);
         }
+    };
+
+    const selectConnect = async (cLoc) => {
+        const isColorSelected = selectedID.indexOf(cLoc);
+
+        if (isColorSelected == -1) {
+            const res = await select(cLoc);
+        } else {
+            const res = await deselect(cLoc, isColorSelected);
+        }
+    };
+
+    const select = async (cLoc) => {
+        if (numSelect === 4) {
+            return -1;
+        } else {
+            setNumSelect(prev => prev + 1);
+            setSelectedID(prev => [...prev, cLoc]);
+            setButtonColorArray(prev => prev.map((color, index) => index === cLoc ? "bg-slate-400" : color));
+        }
+
+        return 1;
+    };
+
+    const deselect = async (cLoc, removeIndex) => {
+        setNumSelect(prev => prev - 1);
+        setSelectedID(selectedID.filter((_, index) => index !== removeIndex));
+        setButtonColorArray(prev => prev.map((color, index) => index === cLoc ? "bg-slate-200" : color));
+
+        return 1;
     };
 
     //loads default connection game
@@ -164,7 +197,8 @@ function ConnectGame(){
 
             <div className="flex flex-wrap gap-4 w-150 mx-auto">
                 {displayArray.map((index) => (
-                    <button key={index} className="w-[calc(25%-1rem)] h-15 bg-slate-200 text-sm sm:text-lg md:text-xl lg:text-1xl rounded-lg">
+                    <button key={index} onClick={() => selectConnect(index)}
+                    className={`w-[calc(25%-1rem)] h-15 text-sm sm:text-lg md:text-xl lg:text-1xl rounded-lg ${buttonColorArray[index]}`}>
                         {answers[index]}
                     </button>
                 ))}
@@ -175,7 +209,9 @@ function ConnectGame(){
             </div>
 
             <div className="flex flex-wrap gap-4 w-150 mx-auto pt-5">
-                <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">SHUFFLE</button>
+                <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Shuffle</button>
+                <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Deselect All</button>
+                <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Submit</button>
             </div>
         </connectgame>
     );
