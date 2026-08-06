@@ -16,6 +16,8 @@ function ConnectGame(){
     const [numSelect, setNumSelect] = useState(0);
     const [selectedID, setSelectedID] = useState([]);
 
+    const [showDeselect, setDeselect] = useState(false);
+
     let gameTitle = "defualt";
     let gameAuthor = "person";
 
@@ -55,6 +57,10 @@ function ConnectGame(){
         } else {
             const res = await deselect(cLoc, isColorSelected);
         }
+
+        if (!showDeselect) {
+            setDeselect(true);
+        }
     };
 
     const select = async (cLoc) => {
@@ -74,8 +80,21 @@ function ConnectGame(){
         setSelectedID(selectedID.filter((_, index) => index !== removeIndex));
         setButtonColorArray(prev => prev.map((color, index) => index === cLoc ? "bg-slate-200" : color));
 
+        if (numSelect == 1) {
+            setDeselect(false);
+        }
+
         return 1;
     };
+
+    const deSelectAll = async () => {
+        for (let i = 0; i < selectedID.length; i++) {
+            setButtonColorArray(prev => prev.map((color, index) => index === selectedID[i] ? "bg-slate-200" : color));
+        }
+        setNumSelect(0);
+        setSelectedID([]);
+        setDeselect(false);
+    }
 
     //loads default connection game
     useEffect(() => {
@@ -210,7 +229,8 @@ function ConnectGame(){
 
             <div className="flex flex-wrap gap-4 w-150 mx-auto pt-5">
                 <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Shuffle</button>
-                <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Deselect All</button>
+                <button onClick={deSelectAll} className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
+                    ${showDeselect ? "bg-slate-200" : "bg-slate-100"} ${showDeselect ? "text-black" : "text-gray-400"}`}>Deselect All</button>
                 <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Submit</button>
             </div>
         </connectgame>
