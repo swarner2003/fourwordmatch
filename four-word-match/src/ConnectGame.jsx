@@ -1,11 +1,11 @@
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import './index.css'
 
 function ConnectGame(){
 
     const [data, setData] = useState(null);
-    const [displayArray, setdisplayArray] = useState(Array.from({ length: 16 }, (_, index) => index));
+    const [displayArray, setDisplayArray] = useState(Array.from({ length: 16 }, (_, index) => index));
     const [buttonColorArray, setButtonColorArray] = useState(Array.from({ length: 16 }, (_, index) => 'bg-slate-200'));
 
     //controlling revealing the answers
@@ -15,6 +15,7 @@ function ConnectGame(){
     const [showTrick, setShowTrick] = useState(false);
     const [numSelect, setNumSelect] = useState(0);
     const [selectedID, setSelectedID] = useState([]);
+    const [guessCounter, setGuessCounter] = useState(4);
 
     const [showDeselect, setDeselect] = useState(false);
 
@@ -80,7 +81,7 @@ function ConnectGame(){
         setSelectedID(selectedID.filter((_, index) => index !== removeIndex));
         setButtonColorArray(prev => prev.map((color, index) => index === cLoc ? "bg-slate-200" : color));
 
-        if (numSelect == 1) {
+        if (numSelect === 1) {
             setDeselect(false);
         }
 
@@ -91,6 +92,43 @@ function ConnectGame(){
         for (let i = 0; i < selectedID.length; i++) {
             setButtonColorArray(prev => prev.map((color, index) => index === selectedID[i] ? "bg-slate-200" : color));
         }
+        setNumSelect(0);
+        setSelectedID([]);
+        setDeselect(false);
+    };
+
+    const submit = async () => {
+        if (numSelect !== 4) {
+            return;
+        }
+
+        const testAnswer = selectedID.map(sID => Math.floor(sID/4));
+        let answerFreq = Array.from({ length: 4 }, (_, index) => 0);
+
+        for (let i = 0; i < testAnswer.length; i++) {
+            let index = testAnswer[i];
+            answerFreq[index] = answerFreq[index] + 1;
+        }
+
+        for (let i = 0; i < answerFreq.length; i++) {
+            if (answerFreq[i] === 4) {
+                await showAnswer(i);
+                await removeAnswerButton();
+                return;
+            } else if ((answerFreq[i] === 3)) {
+                console.log("ONE AWAY")
+            }
+        }
+        
+        setGuessCounter(prev => prev - 1);
+    };
+
+    const removeAnswerButton = async () => {
+        for(let i = 0; i < selectedID.length; i ++) {
+            let removeID = selectedID[i];
+            setDisplayArray(prev => prev.filter(item => item !== removeID));
+        }
+
         setNumSelect(0);
         setSelectedID([]);
         setDeselect(false);
@@ -163,7 +201,7 @@ function ConnectGame(){
 
     //suffles the game using shuffle fuction
     const shuffleDisplay = async () => {
-        setdisplayArray(prev => shuffleArray(prev))
+        setDisplayArray(prev => shuffleArray(prev))
     };
 
     //checks if data has loaded yet, if not displays loading...
@@ -174,8 +212,6 @@ function ConnectGame(){
     //loads defualt table name and author
     let tableName = data.TableName;
     let tableAuthor = data.TableAuthor;
-
-    let guessCounter = 4;
 
     const [categories, answers] = loadGameTable(data.table_info)
     const answerToString = loadAnswersText(answers)
@@ -231,7 +267,7 @@ function ConnectGame(){
                 <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Shuffle</button>
                 <button onClick={deSelectAll} className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
                     ${showDeselect ? "bg-slate-200" : "bg-slate-100"} ${showDeselect ? "text-black" : "text-gray-400"}`}>Deselect All</button>
-                <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Submit</button>
+                <button onClick={submit} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Submit</button>
             </div>
         </connectgame>
     );
