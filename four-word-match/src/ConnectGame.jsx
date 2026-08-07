@@ -1,12 +1,14 @@
 import axios from "axios";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect, use} from "react";
 import './index.css'
+import { useParams } from "react-router-dom";
 
 function ConnectGame(){
 
     const [data, setData] = useState(null);
     const [displayArray, setDisplayArray] = useState(Array.from({ length: 16 }, (_, index) => index));
     const [buttonColorArray, setButtonColorArray] = useState(Array.from({ length: 16 }, (_, index) => 'bg-slate-200'));
+    const { gameID } = useParams();
 
     //controlling revealing the answers
     const [showStraightforward, setShowStraightforward] = useState(false);
@@ -22,12 +24,14 @@ function ConnectGame(){
     let gameTitle = "defualt";
     let gameAuthor = "person";
 
-    const fetchAPI = async () => {
+    const fetchAPI = async (gID) => {
         try{
-            const response = await axios.get("http://localhost:8080/four_word_match_table_information/1")
-            setData(response.data)
+            const targetID = gID ?? 1;
+            const response = await axios.get(`http://localhost:8080/four_word_match_table_information/${targetID}`);
+
+            setData(response.data);
         } catch (error) {
-            console.error("Error Fetching Data:", error)
+            console.error("Error Fetching Data:", error);
         }
     };
 
@@ -136,8 +140,9 @@ function ConnectGame(){
 
     //loads default connection game
     useEffect(() => {
-        fetchAPI();
-    }, []);
+        console.log(gameID);
+        fetchAPI(gameID);
+    }, [gameID]);
 
     //shuffles board
     useEffect(() => {
