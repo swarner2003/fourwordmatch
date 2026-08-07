@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useState, useEffect, use} from "react";
+import { useState, useEffect} from "react";
 import './index.css'
 import { useParams } from "react-router-dom";
 
 function ConnectGame(){
 
+    //handles rendering variables + params
     const [data, setData] = useState(null);
     const [displayArray, setDisplayArray] = useState(Array.from({ length: 16 }, (_, index) => index));
     const [buttonColorArray, setButtonColorArray] = useState(Array.from({ length: 16 }, (_, index) => 'bg-slate-200'));
@@ -15,14 +16,21 @@ function ConnectGame(){
     const [showMedium, setShowMedium] = useState(false);
     const [showHard, setShowHard] = useState(false);
     const [showTrick, setShowTrick] = useState(false);
+    
+    //variables that controll gamestate
     const [numSelect, setNumSelect] = useState(0);
     const [selectedID, setSelectedID] = useState([]);
     const [guessCounter, setGuessCounter] = useState(4);
-
     const [showDeselect, setDeselect] = useState(false);
+    const [showSubmit, setShowSubmit] = useState(false);
+    const [showWrong, setShowWrong] = useState(false);
+    const [threeCorrect, setThreeCorrect] = useState(0);
+    const [guessed, setGuessed] = useState([]);
 
-    let gameTitle = "defualt";
+    let gameTitle = "default";
     let gameAuthor = "person";
+
+    const redMessageArray = ["wrong answer :(", "one away :)", "You have already guessed that :|", "You Lost...Game Over :,("]
 
     const fetchAPI = async (gID) => {
         try{
@@ -77,6 +85,10 @@ function ConnectGame(){
             setButtonColorArray(prev => prev.map((color, index) => index === cLoc ? "bg-slate-400" : color));
         }
 
+        if (numSelect === 3) {
+            setShowSubmit(true);
+        }
+
         return 1;
     };
 
@@ -87,6 +99,8 @@ function ConnectGame(){
 
         if (numSelect === 1) {
             setDeselect(false);
+        } else if (numSelect === 4) {
+            setShowSubmit(false);
         }
 
         return 1;
@@ -102,9 +116,19 @@ function ConnectGame(){
     };
 
     const submit = async () => {
+
+        await setShowWrong(false);
+
         if (numSelect !== 4) {
             return;
+        } else if (await guessedBefore(selectedID)) {
+            await setThreeCorrect(2);
+            await setShowWrong(true);
+            return;
         }
+
+        await setGuessed(prev => [...prev, [...selectedID]]);
+        await setThreeCorrect(0);
 
         const testAnswer = selectedID.map(sID => Math.floor(sID/4));
         let answerFreq = Array.from({ length: 4 }, (_, index) => 0);
@@ -116,14 +140,29 @@ function ConnectGame(){
 
         for (let i = 0; i < answerFreq.length; i++) {
             if (answerFreq[i] === 4) {
-                await showAnswer(i);
-                await removeAnswerButton();
+                showAnswer(i);
+                removeAnswerButton();
+                setShowSubmit(false);
                 return;
             } else if ((answerFreq[i] === 3)) {
-                console.log("ONE AWAY")
+                await setThreeCorrect(1);
             }
         }
+
+        if (guessCounter === 1) {
+            await setThreeCorrect(3);
+            await setShowWrong(true);
+            await deleteWholeBoard();
+            for (let i = 0; i < 4; i++) {
+                showAnswer(i);
+            }
+            await deSelectAll();
+            setShowSubmit(false);
+            setGuessCounter(prev => prev - 1);
+            return;
+        }
         
+        await setShowWrong(true);
         setGuessCounter(prev => prev - 1);
     };
 
@@ -138,9 +177,27 @@ function ConnectGame(){
         setDeselect(false);
     }
 
+    const guessedBefore = async (currentGuess) => {
+        return guessed.some(oldGuess =>
+            compareTwoArrays(currentGuess, oldGuess)
+        );
+    }
+
+    const deleteWholeBoard = async () => {
+        setDisplayArray([]);
+    }
+
+    const compareTwoArrays = (aOne, aTwo) => {
+        if (aOne.length !== aTwo.length) return false;
+
+        const cAOne = [...aOne].sort();
+        const cATwo = [...aTwo].sort();
+
+        return cAOne.every((val, index) => val === cATwo[index]);
+    }
+
     //loads default connection game
     useEffect(() => {
-        console.log(gameID);
         fetchAPI(gameID);
     }, [gameID]);
 
@@ -150,12 +207,12 @@ function ConnectGame(){
     }, []);
 
     function loadGameTable(table_info) {
-        let starightfoward = table_info.straightforward;
+        let straightforward = table_info.straightforward;
         let medium = table_info.medium;
         let hard = table_info.hard;
         let trick = table_info.trick;
         
-        let cateArray = [starightfoward, medium, hard, trick];
+        let cateArray = [straightforward, medium, hard, trick];
 
         let cateNameArray = new Array(4);
         let answerArray = new Array(16);
@@ -214,7 +271,7 @@ function ConnectGame(){
         return <h1>loading...</h1>
     };
 
-    //loads defualt table name and author
+    //loads default table name and author
     let tableName = data.TableName;
     let tableAuthor = data.TableAuthor;
 
@@ -230,6 +287,10 @@ function ConnectGame(){
             <div className="pt-5 pb-5 flex justify-center items-center">
                 Create four groups of four! 
             </div>
+
+            { showWrong && <div className="absolute top-2/9 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 animate-fade-in-out">
+                <h1 className="rounded-lg bg-red-400 p-2 text-2xl">{redMessageArray[threeCorrect]}</h1>
+            </div>}
 
             { showStraightforward && <div className="pr-4 pb-4">
                 <div className="flex justify-center items-center w-146 h-18 mx-auto bg-yellow-200 rounded-lg">
@@ -272,7 +333,8 @@ function ConnectGame(){
                 <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Shuffle</button>
                 <button onClick={deSelectAll} className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
                     ${showDeselect ? "bg-slate-200" : "bg-slate-100"} ${showDeselect ? "text-black" : "text-gray-400"}`}>Deselect All</button>
-                <button onClick={submit} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Submit</button>
+                <button onClick={submit} className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
+                    ${showSubmit ? "bg-slate-200" : "bg-slate-100"} ${showSubmit ? "text-black" : "text-gray-400"}`}>Submit</button>
             </div>
         </connectgame>
     );
