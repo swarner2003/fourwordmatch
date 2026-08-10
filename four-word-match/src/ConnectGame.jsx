@@ -8,7 +8,7 @@ function ConnectGame(){
     //handles rendering variables + params
     const [data, setData] = useState(null);
     const [displayArray, setDisplayArray] = useState(Array.from({ length: 16 }, (_, index) => index));
-    const [buttonColorArray, setButtonColorArray] = useState(Array.from({ length: 16 }, (_, index) => 'bg-slate-200'));
+    const [buttonColorArray, setButtonColorArray] = useState(Array.from({ length: 16 }, (_, index) => 'bg-stone-200'));
     const { gameID } = useParams();
 
     //controlling revealing the answers
@@ -82,7 +82,7 @@ function ConnectGame(){
         } else {
             setNumSelect(prev => prev + 1);
             setSelectedID(prev => [...prev, cLoc]);
-            setButtonColorArray(prev => prev.map((color, index) => index === cLoc ? "bg-slate-400" : color));
+            setButtonColorArray(prev => prev.map((color, index) => index === cLoc ? "bg-lime-400" : color));
         }
 
         if (numSelect === 3) {
@@ -95,7 +95,7 @@ function ConnectGame(){
     const deselect = async (cLoc, removeIndex) => {
         setNumSelect(prev => prev - 1);
         setSelectedID(selectedID.filter((_, index) => index !== removeIndex));
-        setButtonColorArray(prev => prev.map((color, index) => index === cLoc ? "bg-slate-200" : color));
+        setButtonColorArray(prev => prev.map((color, index) => index === cLoc ? "bg-stone-200" : color));
 
         if (numSelect === 1) {
             setDeselect(false);
@@ -293,25 +293,25 @@ function ConnectGame(){
             </div>}
 
             { showStraightforward && <div className="pr-4 pb-4">
-                <div className="flex justify-center items-center w-146 h-18 mx-auto bg-yellow-200 rounded-lg">
+                <div className="flex justify-center items-center w-146 h-18 mx-auto bg-straightforward rounded-lg">
                 <h1 className="text-center text-lg"><div className="text-xl"><b>{categories[0]}</b></div>{answerToString[0]} </h1>
                 </div>
             </div>}
 
             { showMedium && <div className="pr-4 pb-4">
-                <div className="flex justify-center items-center w-146 h-18 mx-auto bg-green-400 rounded-lg">
+                <div className="flex justify-center items-center w-146 h-18 mx-auto bg-medium rounded-lg">
                 <h1 className="text-center text-lg"><div className="text-xl"><b>{categories[1]}</b></div>{answerToString[1]} </h1>
                 </div>
             </div>}
 
             { showHard && <div className="pr-4 pb-4">
-                <div className="flex justify-center items-center w-146 h-18 mx-auto bg-indigo-300 rounded-lg">
+                <div className="flex justify-center items-center w-146 h-18 mx-auto bg-hard rounded-lg">
                 <h1 className="text-center text-lg"><div className="text-xl"><b>{categories[2]}</b></div>{answerToString[2]} </h1>
                 </div>
             </div>}
 
             { showTrick && <div className="pr-4 pb-4">
-                <div className="flex justify-center items-center w-146 h-18 mx-auto bg-purple-400 rounded-lg">
+                <div className="flex justify-center items-center w-146 h-18 mx-auto bg-trick rounded-lg">
                 <h1 className="text-center text-lg"><div className="text-xl"><b>{categories[3]}</b></div>{answerToString[3]} </h1>
                 </div>
             </div>}
@@ -330,11 +330,11 @@ function ConnectGame(){
             </div>
 
             <div className="flex flex-wrap gap-4 w-150 mx-auto pt-5">
-                <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-slate-200 text-xl rounded-lg">Shuffle</button>
+                <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-stone-200 text-xl rounded-lg">Shuffle</button>
                 <button onClick={deSelectAll} className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
-                    ${showDeselect ? "bg-slate-200" : "bg-slate-100"} ${showDeselect ? "text-black" : "text-gray-400"}`}>Deselect All</button>
+                    ${showDeselect ? "bg-stone-200" : "bg-stone-100"} ${showDeselect ? "text-black" : "text-gray-400"}`}>Deselect All</button>
                 <button onClick={submit} className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
-                    ${showSubmit ? "bg-slate-200" : "bg-slate-100"} ${showSubmit ? "text-black" : "text-gray-400"}`}>Submit</button>
+                    ${showSubmit ? "bg-stone-200" : "bg-stone-100"} ${showSubmit ? "text-black" : "text-gray-400"}`}>Submit</button>
             </div>
         </connectgame>
     );

@@ -9,4 +9,20 @@
     80% { opacity: 1; } 
     100% { opacity: 0; }
   }
+
+  --color-straightforward: #ffca3a;
+  --color-medium: #8ac926;
+  --color-hard: #1982c4;
+  --color-trick: #6a4c93;
+
+  --color-barBG: #f07167;
+  --color-barSP: #fed9b7;
+}
+
+body {
+  background-image: url(./public/fourwordconnectbg.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-attachment: fixed;
+  background-size: cover;
 }
