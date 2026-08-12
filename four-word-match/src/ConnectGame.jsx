@@ -34,7 +34,6 @@ function ConnectGame(){
 
     const fetchAPI = async (gID) => {
         try{
-            console.log(gID);
             const targetID = gID ?? 1;
             const response = await axios.get(`http://localhost:8080/four_word_match_table_information/${targetID}`);
 
