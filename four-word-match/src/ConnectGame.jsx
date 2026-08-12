@@ -269,7 +269,7 @@ function ConnectGame(){
 
     //checks if data has loaded yet, if not displays loading...
     if (!data) {
-        return <h1>loading...</h1>
+        return <h1 className="flex justify-center items-center text-3xl">Error: Game not found</h1>
     };
 
     //loads default table name and author
@@ -289,7 +289,7 @@ function ConnectGame(){
                 Create four groups of four! 
             </div>
 
-            { showWrong && <div className="absolute top-2/9 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 animate-fade-in-out">
+            { showWrong && <div className="absolute top-7/30 left-1/2 -translate-x-1/2 -translate-y-1/2 opacity-0 animate-fade-in-out">
                 <h1 className="rounded-lg bg-red-400 p-2 text-2xl">{redMessageArray[threeCorrect]}</h1>
             </div>}
 
