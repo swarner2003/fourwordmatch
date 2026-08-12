@@ -22,6 +22,12 @@ app.get("/four_word_match_table_information/:id", async (req, res) => {
     res.send(game)
 });
 
+app.get("/search", async (req, res) => {
+    const id = req.query.gameID
+    const game = await getGame(id)
+    res.send(game)
+});
+
 app.listen(8080, () => {
     console.log("Server started on port 8080")
 });
