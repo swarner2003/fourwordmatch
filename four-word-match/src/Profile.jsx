@@ -1,4 +1,5 @@
 import { useAuth0 } from '@auth0/auth0-react';
+import LogoutButton from './LogoutButton.jsx'
 
 function Profile(){
     const { user, isAuthenticated, isLoading} = useAuth0();
@@ -20,6 +21,10 @@ function Profile(){
             <div>
                 <h1 className="flex justify-center items-center text-2xl">Welcome to profile</h1>
                 <h1 className="flex justify-center items-center text-xl">User ID: {user.sub}</h1>
+                
+                <div className="flex justify-center items-center">
+                    <LogoutButton />
+                </div>
             </div>
         ) 
     )
