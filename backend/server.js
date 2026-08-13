@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import { getGame, loadProfile } from "./database.js";
+import { getGame, loadProfile, getUserInformation, getOwnedGames } from "./database.js";
 
 const app = express();
 
@@ -31,6 +31,17 @@ app.get("/four_word_match_user_fetch/:Aid", async (req, res) => {
 app.get("/four_word_match_user/:Auth0Token/:Nickname", async (req, res) => {
     const {Auth0Token, Nickname} = req.params
     const result = await loadProfile(Auth0Token, Nickname)
+    res.send(result)
+});
+
+app.get("/four_word_match_user_info/:profileID", async (req, res) => {
+    const id = req.params.profileID
+    const userResults = await getUserInformation(id)
+    const aID = userResults.AuthToken
+    const nickName = userResults.Nickname
+
+    const result = await loadProfile(aID, nickName)
+
     res.send(result)
 });
 

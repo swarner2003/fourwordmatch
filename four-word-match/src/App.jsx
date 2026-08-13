@@ -1,4 +1,5 @@
 import ConnectGame from './ConnectGame.jsx';
+import ForeignProfile from './ForeignProfile.jsx';
 import Header from './Header.jsx';
 import Profile from './Profile.jsx';
 import './index.css';
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<ConnectGame /> }/>
           <Route path="/:gameID" element={<ConnectGame /> }/>
           <Route path="/profile" element={<Profile /> }/>
+          <Route path="/profile/:profileID" element={<ForeignProfile /> }/>
         </Routes>
       </BrowserRouter>
     </div>

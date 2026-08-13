@@ -19,7 +19,7 @@ function Header(){
     return(
         <header>
             <div className="bg-barBG mb-15 flex items-center justify-evenly">
-                <a href="/"><img src="./The Fourman.svg" className="size-24"/></a>
+                <a href="/"><img src="/The Fourman.svg" className="size-24"/></a>
                 <a href="/"><h1 className="text-3xl text-barSP bg-barBGbg rounded-lg p-2">Four Connect Game!</h1></a>
             
                 <form onSubmit={handleSubmit}>
