@@ -12,7 +12,7 @@ createRoot(document.getElementById('root')).render(
     <Auth0Provider 
       domain={domain} 
       clientId={clientID} 
-      authorizationParams={{redirect_uri: window.location.origin}}
+      authorizationParams={{redirect_uri: window.location.origin + "/profile"}}
       useRefreshTokens={true}
       cacheLocation="localstorage"
       >

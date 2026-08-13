@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import { getGame } from "./database.js";
+import { getGame, loadProfile } from "./database.js";
 
 const app = express();
 
@@ -22,10 +22,16 @@ app.get("/four_word_match_table_information/:id", async (req, res) => {
     res.send(game)
 });
 
-app.get("/search", async (req, res) => {
-    const id = req.query.gameID
-    const game = await getGame(id)
-    res.send(game)
+app.get("/four_word_match_user_fetch/:Aid", async (req, res) => {
+    const Aid = req.params.id
+    const createdGames = await getGame(Aid)
+    res.send(createdGames)
+});
+
+app.get("/four_word_match_user/:Auth0Token/:Nickname", async (req, res) => {
+    const {Auth0Token, Nickname} = req.params
+    const result = await loadProfile(Auth0Token, Nickname)
+    res.send(result)
 });
 
 app.listen(8080, () => {

@@ -18,3 +18,49 @@ export async function getGame(id) {
     )
     return rows[0]
 }
+
+export async function getOwnedGames(Aid) {
+    const [rows] = await pool.query(
+        `SELECT * FROM four_word_match_table_information
+        WHERE AuthTokenID = ?`, [Aid]
+    )
+    return rows
+}
+
+export async function addUserToFetch(Aid, Nickname) {
+    const result = await pool.query(
+        `INSERT INTO four_word_match_user_fetch (AuthToken, Nickname)
+        VALUES (?, ?)`, [Aid, Nickname]
+    )
+    return result
+}
+
+export async function loadProfile(Aid, Nickname) {
+    let [rows] = await pool.query(
+        `SELECT * FROM four_word_match_user_fetch
+        WHERE AuthToken = ?`, [Aid]
+    )
+
+    if (!rows[0]) {
+        await addUserToFetch(Aid, Nickname);
+        [rows] = await pool.query(
+            `SELECT * FROM four_word_match_user_fetch
+            WHERE AuthToken = ?`, [Aid]
+        )
+    }
+
+    const ownedGames = await getOwnedGames(Aid)
+
+    return {
+        profile: rows[0],
+        ownedGames: ownedGames
+    }
+}
+
+export async function getUserInformation(id) {
+    const [rows] = await pool.query(
+        ` SELECT * FROM four_word_match_user_fetch
+        WHERE FourID = ?`, [id]
+    )
+    return rows[0]
+}
