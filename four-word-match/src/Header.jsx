@@ -1,6 +1,6 @@
 import { useState } from "react";
 import LoginButton from "./LoginButton";
-import LogoutButton from "./LogoutButton";
+import ProfileButton from "./ProfileButton";
 
 function Header(){
 
@@ -30,7 +30,7 @@ function Header(){
 
                 <a href=""><div className="text-3xl text-barSP  bg-barBGbg rounded-lg p-2">Create a Connection</div></a>
                 <LoginButton />
-                <LogoutButton />
+                <ProfileButton />
             </div>
             
         </header>

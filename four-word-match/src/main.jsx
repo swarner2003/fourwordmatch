@@ -9,7 +9,13 @@ const clientID = import.meta.env.VITE_AUTH0_CLIENT_ID;
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Auth0Provider domain={domain} clientId={clientID} authorizationParams={{redirect_uri: window.location.origin}}>
+    <Auth0Provider 
+      domain={domain} 
+      clientId={clientID} 
+      authorizationParams={{redirect_uri: window.location.origin}}
+      useRefreshTokens={true}
+      cacheLocation="localstorage"
+      >
        <App />
     </Auth0Provider>
   </StrictMode>,
