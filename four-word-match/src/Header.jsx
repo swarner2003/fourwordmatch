@@ -28,7 +28,7 @@ function Header(){
                 </form>
 
 
-                <a href=""><div className="text-3xl text-barSP  bg-barBGbg rounded-lg p-2">Create a Connection</div></a>
+                <a href="/create"><div className="text-3xl text-barSP  bg-barBGbg rounded-lg p-2">Create a Connection</div></a>
                 <LoginButton />
                 <ProfileButton />
             </div>
