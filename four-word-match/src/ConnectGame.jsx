@@ -108,7 +108,7 @@ function ConnectGame(){
 
     const deSelectAll = async () => {
         for (let i = 0; i < selectedID.length; i++) {
-            setButtonColorArray(prev => prev.map((color, index) => index === selectedID[i] ? "bg-slate-200" : color));
+            setButtonColorArray(prev => prev.map((color, index) => index === selectedID[i] ? "bg-stone-200" : color));
         }
         setNumSelect(0);
         setSelectedID([]);
