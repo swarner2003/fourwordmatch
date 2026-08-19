@@ -35,15 +35,33 @@ function CreateGame(){
 
         const formObj = Object.fromEntries(formData.entries());
 
+        formObj.NickName = user.nickname
+        formObj.AuthToken = user.sub
+
         const sendJson = JSON.stringify(formObj);
 
         if (await checkTextForProfanity(sendJson)) {
             setShowBadWordFilter(true);
-            console.log("hit")
             return;
         }
 
-        console.log(sendJson);
+        try {
+            const response = await axios.post("http://localhost:8080/four_word_match_table_create", formObj)
+
+            if (response.data) {
+                window.location.href = `/${response.data}`
+            }
+
+            console.log("Success: ", response.data)
+        } catch (error) {
+
+            if (error.response) {
+              console.error(`Backend returned code ${error.response.status}:`, error.response.data);
+            } else {
+              console.error("Error setting up request:", error.message);
+            }
+
+        }
     };
 
     const checkTextForProfanity = async (jsonInfo) => {

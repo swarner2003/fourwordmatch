@@ -35,6 +35,14 @@ export async function addUserToFetch(Aid, Nickname) {
     return result
 }
 
+export async function createNewTable(Aid, Nickname, TableName, CatJson) {
+    const [result] = await pool.query(
+        `INSERT INTO four_word_match_table_information (AuthTokenID, TableName, TableAuthor, table_info)
+        VALUES (?, ?, ?, ?)`, [Aid, Nickname, TableName, CatJson]
+    )
+    return result.insertId
+}
+
 export async function loadProfile(Aid, Nickname) {
     let [rows] = await pool.query(
         `SELECT * FROM four_word_match_user_fetch

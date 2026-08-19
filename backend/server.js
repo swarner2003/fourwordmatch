@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import { getGame, loadProfile, getUserInformation, getOwnedGames } from "./database.js";
+import { getGame, loadProfile, getUserInformation, getOwnedGames, createNewTable } from "./database.js";
 
 const app = express();
 
@@ -9,11 +9,29 @@ const corsOptions = {
     origin: ["http://localhost:5173"],
 };
 
+app.use(express.json());
+
 app.use(cors(corsOptions));
 
 app.use((err, req, res, next) => {
     console.error(err.stack)
     res.status(500).send('Something broke :(')
+});
+
+app.post("/four_word_match_table_create", async (req, res) => {
+    const { tableTitle, NickName, AuthToken, 
+            sCat, s1, s2, s3, s4,
+            mCat, m1, m2, m3, m4,
+            hCat, h1, h2, h3, h4,
+            tCat, t1, t2, t3, t4,} = req.body;
+
+    const catJson = `{"straightforward": ["${sCat}", "${s1}", "${s2}", "${s3}", "${s4}"], 
+                      "medium": ["${mCat}", "${m1}", "${m2}", "${m3}", "${m4}"], 
+                      "hard": ["${hCat}", "${h1}", "${h2}", "${h3}", "${h4}"], 
+                      "trick": ["${tCat}", "${t1}", "${t2}", "${t3}", "${t4}"]}`
+
+    const result = await createNewTable(AuthToken, tableTitle, NickName, catJson);
+    res.send(result)
 });
 
 app.get("/four_word_match_table_information/:id", async (req, res) => {
