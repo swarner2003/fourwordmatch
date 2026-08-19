@@ -28,9 +28,9 @@ function ForeignProfile(){
             <h1 className="flex justify-center items-center text-3xl mb-4">{data?.profile?.Nickname ?? "Error loading profile name"}</h1>
             <h1 className="flex justify-center items-center text-xl mb-6 underline">Most Recently Made Connections</h1>
 
-            <div className="flex flex-wrap w-150 mx-auto mt-4">
+            <div className="flex flex-wrap w-1/2 mx-auto mt-4">
                 {data?.ownedGames?.slice(0, 10).map((game, index) =>(
-                    <div key={game.TableID ?? index} className='w-150 flex items-center p-2 mb-4 bg-stone-200 rounded-lg ml-auto'>
+                    <div key={game.TableID ?? index} className='w-[calc(100%)] flex items-center p-2 mb-4 bg-stone-200 rounded-lg ml-auto'>
                         <h1>{index + 1}. {game.TableName}</h1>
                         <a className='ml-auto' href={`/${game.TableID}`}>http://localhost:5173/{game.TableID}</a>
                     </div>
