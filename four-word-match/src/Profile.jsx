@@ -21,13 +21,13 @@ function Profile(){
     };
 
     const nextButton = async () => {
-        if ((gameDisplayIndex + 10) < data?.ownedGames?.length) {
+        if ((gameDisplayIndex + 8) < data?.ownedGames?.length) {
             setGameDisplayIndex(prev => prev + 8);
         }
     };
 
     const prevButton = async () => {
-        if ((gameDisplayIndex - 10) < 0) {
+        if ((gameDisplayIndex - 8) < 0) {
             setGameDisplayIndex(0);
         } else {
             setGameDisplayIndex(prev => prev - 8);
