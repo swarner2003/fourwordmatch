@@ -6,24 +6,12 @@ import { getGame, loadProfile, getUserInformation, getOwnedGames, createNewTable
 import dotenv from 'dotenv'
 dotenv.config()
 
+const targetURL = process.env.FRONTEND_URL;
+
 const app = express();
 
-const allowedOrigins = [
-    process.env.FRONTEND_URL, 
-    'https://fourwordmatch.com',
-    'https://fourwordmatch.com'
-];
-
 const corsOptions = {
-    origin: function (origin, callback) {
-        if (!origin) return callback(null, true);
-        
-        if (allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('Not allowed by CORS'));
-        }
-    }
+    origin: [targetURL],
 };
 
 app.use(express.json());
@@ -87,7 +75,7 @@ app.get("/delete_table/:tid", async (req, res) => {
     res.send(result)
 });
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 
 app.listen(PORT, () => {
     console.log(`Server started on port ${PORT}`)
