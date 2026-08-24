@@ -20,6 +20,16 @@ function Profile(){
         }
     };
 
+    const deleteTable = async (tid) => {
+        try {
+            const targetID = tid;
+            const response = await axios.get(`http://localhost:8080/delete_table/${encodeURIComponent(targetID)}`);
+            window.location.reload()
+        } catch (error) {
+            console.error("Error Fetching Data:", error);
+        }
+    }
+
     const nextButton = async () => {
         if ((gameDisplayIndex + 8) < data?.ownedGames?.length) {
             setGameDisplayIndex(prev => prev + 8);
@@ -64,6 +74,7 @@ function Profile(){
                         <div key={game.TableID ?? index} className='w-[calc(100%)] flex items-center p-2 mb-4 bg-stone-200 rounded-lg ml-auto'>
                             <h1>{index + 1 + gameDisplayIndex}. {game.TableName}</h1>
                             <a className='ml-auto' href={`/${game.TableID}`}>http://localhost:5173/{game.TableID}</a>
+                            <button className="ml-2 text-sm text-red-800 bg-red-300 rounded-lg p-2" onClick={() => deleteTable(game.TableID)}>Delete</button> 
                         </div>
                     ))}
                     <button className="text-3xl text-barSP bg-barBGbg rounded-lg p-2" onClick={() => prevButton()}>Prev</button>

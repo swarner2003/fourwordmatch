@@ -65,6 +65,15 @@ export async function loadProfile(Aid, Nickname) {
     }
 }
 
+export async function deleteTable(tid) {
+    let [rows] = await pool.query(
+        `DELETE FROM four_word_match_table_information
+        WHERE TableID = ?`, [tid]
+    )
+
+    return rows
+}
+
 export async function getUserInformation(id) {
     const [rows] = await pool.query(
         ` SELECT * FROM four_word_match_user_fetch

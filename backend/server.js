@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import { getGame, loadProfile, getUserInformation, getOwnedGames, createNewTable } from "./database.js";
+import { getGame, loadProfile, getUserInformation, getOwnedGames, createNewTable, deleteTable } from "./database.js";
 
 const app = express();
 
@@ -59,6 +59,13 @@ app.get("/four_word_match_user_info/:profileID", async (req, res) => {
     const nickName = userResults.Nickname
 
     const result = await loadProfile(aID, nickName)
+
+    res.send(result)
+});
+
+app.get("/delete_table/:tid", async (req, res) => {
+    const targetID = req.params.tid
+    const result = await deleteTable(targetID)
 
     res.send(result)
 });
