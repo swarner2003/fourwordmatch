@@ -3,6 +3,8 @@ import { useState, useEffect} from "react";
 import './index.css'
 import { useParams } from "react-router-dom";
 
+const apiURL = import.meta.env.VITE_API_URL;
+
 function ConnectGame(){
 
     //handles rendering variables + params
@@ -35,7 +37,7 @@ function ConnectGame(){
     const fetchAPI = async (gID) => {
         try{
             const targetID = gID ?? 1;
-            const response = await axios.get(`http://localhost:8080/four_word_match_table_information/${targetID}`);
+            const response = await axios.get(`${apiURL}four_word_match_table_information/${targetID}`);
 
             setData(response.data);
         } catch (error) {

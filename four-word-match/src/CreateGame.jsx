@@ -9,6 +9,8 @@ function CreateGame(){
     const [data, setData] = useState(null);
     const [showBadWordFilter, setShowBadWordFilter] = useState(false);
 
+    const apiURL = import.meta.env.VITE_API_URL;
+
     const matcher = new RegExpMatcher({
         ...englishDataset.build(),
         ...englishRecommendedTransformers,
@@ -46,7 +48,7 @@ function CreateGame(){
         }
 
         try {
-            const response = await axios.post("http://localhost:8080/four_word_match_table_create", formObj)
+            const response = await axios.post(`${apiURL}four_word_match_table_create`, formObj)
 
             if (response.data) {
                 window.location.href = `/${response.data}`

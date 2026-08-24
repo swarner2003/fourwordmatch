@@ -8,11 +8,13 @@ function Profile(){
     const [data, setData] = useState(null);
     const [gameDisplayIndex, setGameDisplayIndex] = useState(0);
 
+    const apiURL = import.meta.env.VITE_API_URL;
+
     const fetchAPI = async (AID, Nick) => {
         try{
             const targetID = AID;
             const targetNickName = Nick;
-            const response = await axios.get(`http://localhost:8080/four_word_match_user/${encodeURIComponent(targetID)}/${encodeURIComponent(targetNickName)}`);
+            const response = await axios.get(`${apiURL}four_word_match_user/${encodeURIComponent(targetID)}/${encodeURIComponent(targetNickName)}`);
 
             setData(response.data);
         } catch (error) {
@@ -23,7 +25,7 @@ function Profile(){
     const deleteTable = async (tid) => {
         try {
             const targetID = tid;
-            const response = await axios.get(`http://localhost:8080/delete_table/${encodeURIComponent(targetID)}`);
+            const response = await axios.get(`${apiURL}delete_table/${encodeURIComponent(targetID)}`);
             window.location.reload()
         } catch (error) {
             console.error("Error Fetching Data:", error);
@@ -73,7 +75,7 @@ function Profile(){
                     {data?.ownedGames?.slice(gameDisplayIndex, gameDisplayIndex+8).map((game, index) =>(
                         <div key={game.TableID ?? index} className='w-[calc(100%)] flex items-center p-2 mb-4 bg-stone-200 rounded-lg ml-auto'>
                             <h1>{index + 1 + gameDisplayIndex}. {game.TableName}</h1>
-                            <a className='ml-auto' href={`/${game.TableID}`}>http://localhost:5173/{game.TableID}</a>
+                            <a className='ml-auto' href={`/${game.TableID}`}>{apiURL}{game.TableID}</a>
                             <button className="ml-2 text-sm text-red-800 bg-red-300 rounded-lg p-2" onClick={() => deleteTable(game.TableID)}>Delete</button> 
                         </div>
                     ))}

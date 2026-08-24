@@ -2,6 +2,8 @@ import axios from "axios";
 import { useState, useEffect} from "react";
 import { useParams } from "react-router-dom";
 
+const apiURL = import.meta.env.VITE_API_URL;
+
 function ForeignProfile(){
     const [data, setData] = useState(null);
     const { profileID } = useParams();
@@ -11,7 +13,7 @@ function ForeignProfile(){
         try{
             const targetID = pID;
 
-            const response = await axios.get(`http://localhost:8080/four_word_match_user_info/${targetID}`);
+            const response = await axios.get(`${apiURL}four_word_match_user_info/${targetID}`);
 
             setData(response.data);
         } catch (error) {
