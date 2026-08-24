@@ -3,10 +3,15 @@ import cors from "cors";
 
 import { getGame, loadProfile, getUserInformation, getOwnedGames, createNewTable, deleteTable } from "./database.js";
 
+import dotenv from 'dotenv'
+dotenv.config()
+
+const targetURL = process.env.API_URL;
+
 const app = express();
 
 const corsOptions = {
-    origin: ["http://localhost:5173"],
+    origin: [targetURL],
 };
 
 app.use(express.json());
@@ -70,6 +75,8 @@ app.get("/delete_table/:tid", async (req, res) => {
     res.send(result)
 });
 
-app.listen(8080, () => {
-    console.log("Server started on port 8080")
+const PORT = process.env.PORT || 8080;
+
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`)
 });
