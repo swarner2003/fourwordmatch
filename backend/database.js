@@ -22,7 +22,8 @@ export async function getGame(id) {
 export async function getOwnedGames(Aid) {
     const [rows] = await pool.query(
         `SELECT * FROM four_word_match_table_information
-        WHERE AuthTokenID = ?`, [Aid]
+        WHERE AuthTokenID = ?
+        ORDER BY TableID DESC`, [Aid]
     )
     return rows
 }
