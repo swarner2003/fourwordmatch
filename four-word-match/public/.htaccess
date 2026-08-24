@@ -2,10 +2,14 @@ Options -MultiViews
 RewriteEngine On
 RewriteBase /
 
-# 1. If the requested file or folder actually exists, serve it normally
+# 1. EXCLUDE YOUR BACKEND: If URL starts with your API route prefix, do not rewrite it
+RewriteCond %{REQUEST_URI} ^/api [NC]
+RewriteRule ^ - [L]
+
+# 2. If the requested file or folder actually exists, serve it normally
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# 2. Otherwise, pass the routing to index.html
+# 3. Otherwise, pass the routing to index.html
 RewriteRule ^ index.html [L]
