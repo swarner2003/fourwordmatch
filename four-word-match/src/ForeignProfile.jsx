@@ -49,7 +49,7 @@ function ForeignProfile(){
                 {data?.ownedGames?.slice(gameDisplayIndex, gameDisplayIndex + 8).map((game, index) =>(
                     <div key={game.TableID ?? index} className='w-[calc(100%)] flex items-center p-2 mb-4 bg-stone-200 rounded-lg ml-auto'>
                         <h1>{index + 1 + gameDisplayIndex}. {game.TableName}</h1>
-                        <a className='ml-auto' href={`/${game.TableID}`}>http://localhost:5173/{game.TableID}</a>
+                        <a className='ml-auto' href={`/${game.TableID}`}>https://fourwordmatch.com/{game.TableID}</a>
                     </div>
                 ))}
 
