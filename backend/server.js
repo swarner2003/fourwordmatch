@@ -6,12 +6,24 @@ import { getGame, loadProfile, getUserInformation, getOwnedGames, createNewTable
 import dotenv from 'dotenv'
 dotenv.config()
 
-const targetURL = process.env.FRONTEND_URL;
-
 const app = express();
 
+const allowedOrigins = [
+    process.env.FRONTEND_URL, 
+    'https://fourwordmatch.com',
+    'https://fourwordmatch.com'
+];
+
 const corsOptions = {
-    origin: [targetURL],
+    origin: function (origin, callback) {
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.includes(origin)) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    }
 };
 
 app.use(express.json());
