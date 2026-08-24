@@ -2,10 +2,10 @@ Options -MultiViews
 RewriteEngine On
 RewriteBase /
 
-# Force Apache to ignore rewriting for actual existing files or folders
+# 1. If the requested file or folder actually exists, serve it normally
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
-# Redirect all other routing requests to index.html
+# 2. Otherwise, pass the routing to index.html
 RewriteRule ^ index.html [L]
