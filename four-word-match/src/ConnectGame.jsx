@@ -39,6 +39,8 @@ function ConnectGame(){
             const targetID = gID ?? 1;
             const response = await axios.get(`${apiURL}four_word_match_table_information/${targetID}`);
 
+            console.log(response)
+
             setData(response.data);
         } catch (error) {
             console.error("Error Fetching Data:", error);
