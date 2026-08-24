@@ -38,9 +38,6 @@ function ConnectGame(){
         try{
             const targetID = gID ?? 1;
             const response = await axios.get(`${apiURL}four_word_match_table_information/${targetID}`);
-
-            console.log(response)
-
             setData(response.data);
         } catch (error) {
             console.error("Error Fetching Data:", error);
@@ -297,30 +294,30 @@ function ConnectGame(){
             </div>}
 
             { showStraightforward && <div className="pr-4 pb-4">
-                <div className="flex justify-center items-center w-[calc(40.5%-1rem)] h-16 mx-auto bg-straightforward rounded-lg">
-                <h1 className="text-center text-lg"><div className="text-xl"><b>{categories[0]}</b></div>{answerToString[0]} </h1>
+                <div className="flex justify-center items-center w-[calc(40.5%-1rem)] max-lg:w-[calc(72.5%-1rem)] h-16 mx-auto bg-straightforward rounded-lg">
+                <h1 className="text-center text-md max-lg:text-sm"><div className="text-xl max-lg:text-md"><b>{categories[0]}</b></div>{answerToString[0]} </h1>
                 </div>
             </div>}
 
             { showMedium && <div className="pr-4 pb-4">
-                <div className="flex justify-center items-center w-[calc(40.5%-1rem)] h-16 mx-auto bg-medium rounded-lg">
-                <h1 className="text-center text-lg"><div className="text-xl"><b>{categories[1]}</b></div>{answerToString[1]} </h1>
+                <div className="flex justify-center items-center w-[calc(40.5%-1rem)] max-lg:w-[calc(72.5%-1rem)] h-16 mx-auto bg-medium rounded-lg">
+                <h1 className="text-center text-md max-lg:text-sm"><div className="text-xl max-lg:text-md"><b>{categories[1]}</b></div>{answerToString[1]} </h1>
                 </div>
             </div>}
 
             { showHard && <div className="pr-4 pb-4">
-                <div className="flex justify-center items-center w-[calc(40.5%-1rem)] h-16 mx-auto bg-hard rounded-lg">
-                <h1 className="text-center text-lg"><div className="text-xl"><b>{categories[2]}</b></div>{answerToString[2]} </h1>
+                <div className="flex justify-center items-center w-[calc(40.5%-1rem)] max-lg:w-[calc(72.5%-1rem)] h-16 mx-auto bg-hard rounded-lg">
+                <h1 className="text-center text-md max-lg:text-sm"><div className="text-xl max-lg:text-md"><b>{categories[2]}</b></div>{answerToString[2]} </h1>
                 </div>
             </div>}
 
             { showTrick && <div className="pr-4 pb-4">
-                <div className="flex justify-center items-center w-[calc(40.5%-1rem)] h-16 mx-auto bg-trick rounded-lg">
-                <h1 className="text-center text-lg"><div className="text-xl"><b>{categories[3]}</b></div>{answerToString[3]} </h1>
+                <div className="flex justify-center items-center w-[calc(40.5%-1rem)] max-lg:w-[calc(72.5%-1rem)] h-16 mx-auto bg-trick rounded-lg">
+                <h1 className="text-center text-md max-lg:text-sm"><div className="text-xl max-lg:text-md"><b>{categories[3]}</b></div>{answerToString[3]} </h1>
                 </div>
             </div>}
 
-            <div className="flex flex-wrap gap-4 w-2/5 mx-auto">
+            <div className="flex flex-wrap gap-4 w-2/5 max-lg:w-5/7 mx-auto">
                 {displayArray.map((index) => (
                     <button key={index} onClick={() => selectConnect(index)}
                     className={`w-[calc(25%-1rem)] h-15 text-sm sm:text-lg md:text-xl lg:text-1xl rounded-lg ${buttonColorArray[index]}`}>
@@ -333,7 +330,7 @@ function ConnectGame(){
                 Mistakes remaining: {guessCounter} 
             </div>
 
-            <div className="flex flex-wrap gap-5 w-2/5 mx-auto pt-5">
+            <div className="flex flex-wrap gap-5 w-2/5 max-lg:w-5/7 mx-auto pt-5">
                 <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-stone-200 text-xl rounded-lg">Shuffle</button>
                 <button onClick={deSelectAll} className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
                     ${showDeselect ? "bg-stone-200" : "bg-stone-100"} ${showDeselect ? "text-black" : "text-gray-400"}`}>Deselect All</button>

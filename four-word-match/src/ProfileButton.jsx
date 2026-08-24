@@ -5,7 +5,7 @@ function ProfileButton(){
 
     return (
         isAuthenticated && (
-            <a href="/profile"><button className="text-2xl text-barSP bg-barBGbg rounded-lg text-center p-2">Profile</button></a>
+            <a href="/profile"><button className="text-2xl max-lg:text-sm text-barSP bg-barBGbg rounded-lg text-center p-2">Profile</button></a>
         )
     )
 }

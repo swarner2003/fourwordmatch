@@ -11,7 +11,7 @@ const targetURL = process.env.FRONTEND_URL;
 const app = express();
 
 const corsOptions = {
-    origin: [targetURL],
+    origin: [targetURL, "http://localhost:5173/"],
 };
 
 app.use(express.json());
@@ -46,7 +46,7 @@ app.get("/four_word_match_table_information/:id", async (req, res) => {
 });
 
 app.get("/four_word_match_user_fetch/:Aid", async (req, res) => {
-    const Aid = req.params.id
+    const Aid = req.params.Aid
     const createdGames = await getGame(Aid)
     res.send(createdGames)
 });
