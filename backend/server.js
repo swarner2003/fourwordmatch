@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import { getGame, loadProfile, getUserInformation, getOwnedGames, createNewTable, deleteTable } from "./database.js";
+import { getGame, loadProfile, getUserInformation, getOwnedGames, createNewTable, deleteTable, getFourID } from "./database.js";
 
 import dotenv from 'dotenv'
 dotenv.config()
@@ -71,6 +71,13 @@ app.get("/four_word_match_user_info/:profileID", async (req, res) => {
 app.get("/delete_table/:tid", async (req, res) => {
     const targetID = req.params.tid
     const result = await deleteTable(targetID)
+
+    res.send(result)
+});
+
+app.get("/get_four_id/:Aid", async (req, res) => {
+    const targetID = req.params.Aid
+    const result = await getFourID(targetID)
 
     res.send(result)
 });

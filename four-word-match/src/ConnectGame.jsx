@@ -327,7 +327,7 @@ function ConnectGame(){
             </div>
 
             <div className="pt-5 flex justify-center items-center">
-                Mistakes remaining: {[...Array(guessCounter)].map((e, i) => <span className="mistake" key={i}>⚫</span>)}
+                Mistakes remaining:{"\u00a0"}{[...Array(guessCounter)].map((e, i) => <span className="mistake" key={i}>{"\u00a0"}⚫{"\u00a0"}</span>)}
             </div>
 
             <div className="flex flex-wrap gap-5 w-2/5 max-lg:w-5/7 mx-auto pt-5">
