@@ -11,7 +11,7 @@ const targetURL = process.env.FRONTEND_URL;
 const app = express();
 
 const corsOptions = {
-    origin: [targetURL, "http://localhost:5173/"],
+    origin: [targetURL, "http://localhost:5173"],
 };
 
 app.use(express.json());

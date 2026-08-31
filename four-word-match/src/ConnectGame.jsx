@@ -320,7 +320,7 @@ function ConnectGame(){
             <div className="@container flex flex-wrap gap-4 w-2/5 max-lg:w-5/7 mx-auto">
                 {displayArray.map((index) => (
                     <button key={index} onClick={() => selectConnect(index)}
-                    className={`w-[calc(25%-1rem)] h-15 text-lg max-lg:text-xs rounded-lg break-words ${buttonColorArray[index]}`}>
+                    className={`w-[calc(25%-1rem)] h-15 text-lg max-lg:text-xs rounded-lg wrap-break-words ${buttonColorArray[index]}`}>
                         {answers[index]}
                     </button>
                 ))}
