@@ -30,6 +30,14 @@ app.post("/four_word_match_table_create", async (req, res) => {
             hCat, h1, h2, h3, h4,
             tCat, t1, t2, t3, t4,} = req.body;
 
+    const checkList = [sCat, s1, s2, s3, s4, mCat, m1, m2, m3, m4, hCat, h1, h2, h3, h4, tCat, t1, t2, t3, t4];
+
+    for (let i = 0; i < checkList.length; i++) {
+        if (checkList[i].indexOf('"') != -1) {
+            checkList[i] = checkList[i].replaceAll('"', '\"')
+        }
+    }
+
     const catJson = `{"straightforward": ["${sCat}", "${s1}", "${s2}", "${s3}", "${s4}"], 
                       "medium": ["${mCat}", "${m1}", "${m2}", "${m3}", "${m4}"], 
                       "hard": ["${hCat}", "${h1}", "${h2}", "${h3}", "${h4}"], 
