@@ -13,7 +13,7 @@ function ConnectGame(){
     const [buttonColorArray, setButtonColorArray] = useState(Array.from({ length: 16 }, (_, index) => 'bg-stone-200'));
     const { gameID } = useParams();
 
-    //controlling revealing the answer cat
+    //controlling revealing the answers
     const [showStraightforward, setShowStraightforward] = useState(false);
     const [showMedium, setShowMedium] = useState(false);
     const [showHard, setShowHard] = useState(false);
