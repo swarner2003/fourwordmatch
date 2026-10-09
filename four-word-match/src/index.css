@@ -15,9 +15,10 @@
   --color-hard: #1982c4;
   --color-trick: #6a4c93;
 
-  --color-barBG: #fed9b7;
-  --color-barBGbg: #fdfcdc;
-  --color-barSP: #f07167;
+  /*SUMMER COLORS: #fed9b7, #fdfcdc, #f07167*/
+  --color-barBG: #e36414;
+  --color-barBGbg: #fb8b24;
+  --color-barSP: #9a031e;
 }
 
 body {
