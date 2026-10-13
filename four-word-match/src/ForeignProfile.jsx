@@ -9,6 +9,8 @@ function ForeignProfile(){
     const { profileID } = useParams();
     const [gameDisplayIndex, setGameDisplayIndex] = useState(0);
 
+    const [showCopy, setShowCopy] = useState(false);
+
     const fetchAPI = async (pID) => {
         try{
             const targetID = pID;
@@ -36,8 +38,11 @@ function ForeignProfile(){
     }
 
     const copyButton = async (copyLink) => {
+        await setShowCopy(false);
+
         try {
             await navigator.clipboard.writeText(copyLink)
+            await setShowCopy(true);
         } catch (err) {
             console.error("Copy text error: ", err)
         }
@@ -49,6 +54,9 @@ function ForeignProfile(){
 
     return (
         <div>
+            { showCopy && 
+                <div className="text-3xl absolute left-1/2 -translate-x-1/2 top-1/5 w-1/4 text-center text-green-800 bg-green-300 rounded-lg p-2 opacity-0 animate-fade-in-out">Link Copied!</div>}
+
             <div className="flex justify-center items-center ">
                 <h1 className="text-6xl mb-4">Profile</h1>
                 <button className="ml-4 text-sm text-green-800 bg-green-300 rounded-lg p-2" onClick={() => copyButton(`https://fourwordmatch.com/profile/${profileID}`)}>Share Profile</button>
@@ -62,14 +70,14 @@ function ForeignProfile(){
                     <div key={game.TableID ?? index} className='w-[calc(100%)] flex items-center p-2 mb-4 bg-stone-200 rounded-lg ml-auto'>
                         <h1>{index + 1 + gameDisplayIndex}. {game.TableName}</h1>
                         <div className='ml-auto'>
-                            <button className="mr-4 text-sm text-green-800 bg-green-300 rounded-lg p-2" onClick={() => copyButton(`https://fourwordmatch.com/${game.TableID}`)}>Copy Link</button>
+                            <button className="mr-4 text-sm text-green-800 bg-green-300 rounded-lg p-2" onClick={() => copyButton(`https://fourwordmatch.com/${game.TableID}`)}>Share</button>
                             <a href={`/${game.TableID}`}>https://fourwordmatch.com/{game.TableID}</a>
                         </div>
                     </div>
                 ))}
 
-                <button className="text-3xl text-barSP bg-barBGbg rounded-lg p-2" onClick={() => prevButton()}>Prev</button>
-                <button className="text-3xl text-barSP bg-barBGbg rounded-lg p-2 flex ml-auto" onClick={() => nextButton()}>Next</button>
+                <button className="text-3xl text-barSP hover:bg-barBG transition-colors duration-300 ease-in-out rounded-lg p-2" onClick={() => prevButton()}>Prev</button>
+                <button className="text-3xl text-barSP hover:bg-barBG transition-colors duration-300 ease-in-out rounded-lg p-2 flex ml-auto" onClick={() => nextButton()}>Next</button>
             </div>
 
         </div>

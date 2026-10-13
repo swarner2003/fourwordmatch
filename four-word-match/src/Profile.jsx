@@ -9,6 +9,8 @@ function Profile(){
     const [fourID, setFourID] = useState(0);
     const [gameDisplayIndex, setGameDisplayIndex] = useState(0);
 
+    const [showCopy, setShowCopy] = useState(false);
+
     const apiURL = import.meta.env.VITE_API_URL;
 
     const fetchAPI = async (AID, Nick) => {
@@ -50,8 +52,10 @@ function Profile(){
     }
 
     const copyButton = async (copyLink) => {
+        await setShowCopy(false)
         try {
             await navigator.clipboard.writeText(copyLink)
+            await setShowCopy(true)
         } catch (err) {
             console.error("Copy text error: ", err)
         }
@@ -78,6 +82,9 @@ function Profile(){
     return (
         isAuthenticated && (
             <div>
+                { showCopy && 
+                <div className="text-3xl absolute left-1/2 -translate-x-1/2 top-1/5 w-1/4 text-center text-green-800 bg-green-300 rounded-lg p-2 opacity-0 animate-fade-in-out">Link Copied!</div>}
+
                 <div className="flex justify-center items-center ">
                     <h1 className="text-6xl mb-4">Profile</h1>
                     <button className="ml-4 text-sm text-green-800 bg-green-300 rounded-lg p-2" onClick={() => copyButton(`https://fourwordmatch.com/profile/${fourID}`)}>Share Profile</button>
@@ -92,13 +99,13 @@ function Profile(){
                             <h1>{index + 1 + gameDisplayIndex}. {game.TableName}</h1>
                             <div className='ml-auto'>
                                 <a href={`/${game.TableID}`}>https://fourwordmatch.com/{game.TableID}</a>
-                                <button className="ml-4 text-sm text-green-800 bg-green-300 rounded-lg p-2" onClick={() => copyButton(`https://fourwordmatch.com/${game.TableID}`)}>Copy Link</button>
+                                <button className="ml-4 text-sm text-green-800 bg-green-300 rounded-lg p-2" onClick={() => copyButton(`https://fourwordmatch.com/${game.TableID}`)}>Share</button>
                                 <button className="ml-4 text-sm text-red-800 bg-red-300 rounded-lg p-2" onClick={() => deleteTable(game.TableID)}>Delete</button>
                             </div> 
                         </div>
                     ))}
-                    <button className="text-3xl text-barSP bg-barBGbg rounded-lg p-2" onClick={() => prevButton()}>Prev</button>
-                    <button className="text-3xl text-barSP bg-barBGbg rounded-lg p-2 flex ml-auto" onClick={() => nextButton()}>Next</button>
+                    <button className="text-3xl text-barSP hover:bg-barBG transition-colors duration-300 ease-in-out rounded-lg p-2" onClick={() => prevButton()}>Prev</button>
+                    <button className="text-3xl text-barSP hover:bg-barBG transition-colors duration-300 ease-in-out rounded-lg p-2 flex ml-auto" onClick={() => nextButton()}>Next</button>
                 </div>
 
 
