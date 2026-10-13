@@ -104,8 +104,8 @@ function Profile(){
                             </div> 
                         </div>
                     ))}
-                    <button className="text-3xl text-barSP hover:bg-barBG transition-colors duration-300 ease-in-out rounded-lg p-2" onClick={() => prevButton()}>Prev</button>
-                    <button className="text-3xl text-barSP hover:bg-barBG transition-colors duration-300 ease-in-out rounded-lg p-2 flex ml-auto" onClick={() => nextButton()}>Next</button>
+                    <button className="text-3xl text-barSP bg-barBG rounded-lg p-2" onClick={() => prevButton()}>Prev</button>
+                    <button className="text-3xl text-barSP bg-barBG rounded-lg p-2 flex ml-auto" onClick={() => nextButton()}>Next</button>
                 </div>
 
 
