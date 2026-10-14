@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 
-import { getGame, loadProfile, getUserInformation, getOwnedGames, createNewTable, deleteTable, getFourID } from "./database.js";
+import { getGame, loadProfile, getUserInformation, getOwnedGames, createNewTable, deleteTable, getFourID, alterTable} from "./database.js";
 
 import dotenv from 'dotenv'
 dotenv.config()
@@ -44,6 +44,30 @@ app.post("/four_word_match_table_create", async (req, res) => {
                       "trick": ["${tCat}", "${t1}", "${t2}", "${t3}", "${t4}"]}`
 
     const result = await createNewTable(AuthToken, tableTitle, NickName, catJson);
+    res.send(result)
+});
+
+app.post("/four_word_match_table_alter", async (req, res) => {
+    const { AuthToken, tableID,
+            sCat, s1, s2, s3, s4,
+            mCat, m1, m2, m3, m4,
+            hCat, h1, h2, h3, h4,
+            tCat, t1, t2, t3, t4,} = req.body;
+
+    const checkList = [sCat, s1, s2, s3, s4, mCat, m1, m2, m3, m4, hCat, h1, h2, h3, h4, tCat, t1, t2, t3, t4];
+
+    for (let i = 0; i < checkList.length; i++) {
+        if (checkList[i].indexOf('"') != -1) {
+            checkList[i] = checkList[i].replaceAll('"', '\"')
+        }
+    }
+
+    const catJson = `{"straightforward": ["${sCat}", "${s1}", "${s2}", "${s3}", "${s4}"], 
+                      "medium": ["${mCat}", "${m1}", "${m2}", "${m3}", "${m4}"], 
+                      "hard": ["${hCat}", "${h1}", "${h2}", "${h3}", "${h4}"], 
+                      "trick": ["${tCat}", "${t1}", "${t2}", "${t3}", "${t4}"]}`
+
+    const result = await alterTable(AuthToken, tableID, catJson);
     res.send(result)
 });
 

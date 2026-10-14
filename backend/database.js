@@ -53,6 +53,16 @@ export async function createNewTable(Aid, Nickname, TableName, CatJson) {
     return result.insertId
 }
 
+export async function alterTable(AuthToken, tableID, catJson) {
+    const [result] = await pool.query(
+        `UPDATE four_word_match_table_information
+        SET table_info = ?
+        WHERE TableID = ? AND AuthTokenID = ?`, [catJson, tableID, AuthToken]
+    )
+
+    return result
+}
+
 export async function loadProfile(Aid, Nickname) {
     let [rows] = await pool.query(
         `SELECT * FROM four_word_match_user_fetch

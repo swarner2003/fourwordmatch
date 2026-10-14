@@ -3,6 +3,7 @@ import ForeignProfile from './ForeignProfile.jsx';
 import Header from './Header.jsx';
 import Profile from './Profile.jsx';
 import CreateGame from './CreateGame.jsx'
+import EditGame from './EditGame.jsx'
 import './index.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
@@ -18,6 +19,7 @@ function App() {
           <Route path="/profile" element={<Profile /> }/>
           <Route path="/profile/:profileID" element={<ForeignProfile /> }/>
           <Route path="/create" element={<CreateGame /> }/>
+          <Route path="/edit/:gameID" element={<EditGame /> }/>
         </Routes>
       </BrowserRouter>
     </div>

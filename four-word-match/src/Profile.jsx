@@ -100,6 +100,7 @@ function Profile(){
                             <div className='ml-auto'>
                                 <a href={`/${game.TableID}`}>https://fourwordmatch.com/{game.TableID}</a>
                                 <button className="ml-4 text-sm text-green-800 bg-green-300 rounded-lg p-2" onClick={() => copyButton(`https://fourwordmatch.com/${game.TableID}`)}>Share</button>
+                                <a href={`/edit/${game.TableID}`} className="ml-4 text-sm text-yellow-800 bg-yellow-300 rounded-lg p-2">Edit</a>
                                 <button className="ml-4 text-sm text-red-800 bg-red-300 rounded-lg p-2" onClick={() => deleteTable(game.TableID)}>Delete</button>
                             </div> 
                         </div>
