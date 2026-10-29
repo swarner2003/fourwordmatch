@@ -322,7 +322,7 @@ function ConnectGame(){
                     <button 
                     key={index} 
                     onClick={() => selectConnect(index)}
-                    style={{ fontSize: "3cqi" }}
+                    style={{ fontSize: "2.5cqi"}}
                     className={`w-[calc(25%-1rem)] h-15 rounded-lg break-words ${buttonColorArray[index]}`}>
                         {answers[index]}
                     </button>
