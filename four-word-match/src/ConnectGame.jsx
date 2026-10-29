@@ -319,8 +319,11 @@ function ConnectGame(){
 
             <div className="@container flex flex-wrap gap-4 w-2/5 max-lg:w-5/7 mx-auto">
                 {displayArray.map((index) => (
-                    <button key={index} onClick={() => selectConnect(index)}
-                    className={`w-[calc(25%-1rem)] h-15 text-lg max-lg:text-xs rounded-lg break-words ${buttonColorArray[index]}`}>
+                    <button 
+                    key={index} 
+                    onClick={() => selectConnect(index)}
+                    style={{ fontSize: "3cqi" }}
+                    className={`w-[calc(25%-1rem)] h-15 rounded-lg break-words ${buttonColorArray[index]}`}>
                         {answers[index]}
                     </button>
                 ))}
@@ -331,11 +334,22 @@ function ConnectGame(){
             </div>
 
             <div className="flex flex-wrap gap-5 w-2/5 max-lg:w-5/7 mx-auto pt-5">
-                <button onClick={shuffleDisplay} className="w-[calc(33%-1rem)] h-15 bg-stone-200 text-xl rounded-lg">Shuffle</button>
-                <button onClick={deSelectAll} className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
-                    ${showDeselect ? "bg-stone-200" : "bg-stone-100"} ${showDeselect ? "text-black" : "text-gray-400"}`}>Deselect All</button>
-                <button onClick={submit} className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
-                    ${showSubmit ? "bg-stone-200" : "bg-stone-100"} ${showSubmit ? "text-black" : "text-gray-400"}`}>Submit</button>
+                <button 
+                onClick={shuffleDisplay} 
+                className="w-[calc(33%-1rem)] h-15 bg-stone-200 text-xl rounded-lg">
+                    Shuffle</button>
+
+                <button 
+                onClick={deSelectAll} 
+                className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
+                    ${showDeselect ? "bg-stone-200" : "bg-stone-100"} ${showDeselect ? "text-black" : "text-gray-400"}`}>
+                        Deselect All</button>
+
+                <button 
+                onClick={submit} 
+                className={`w-[calc(33%-1rem)] h-15 text-xl rounded-lg 
+                    ${showSubmit ? "bg-stone-200" : "bg-stone-100"} ${showSubmit ? "text-black" : "text-gray-400"}`}>
+                        Submit</button>
             </div>
         </connectgame>
     );
