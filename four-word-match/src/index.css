@@ -16,13 +16,14 @@
   --color-trick: #6a4c93;
 
   /*SUMMER COLORS: #fed9b7, #fdfcdc, #f07167*/
-  --color-barBG: #e36414;
-  --color-barBGbg: #fb8b24;
-  --color-barSP: #9a031e;
+  /*Halloween COLORS: #e36414, #fb8b24, #9a031e*/
+  --color-barBG: #450000;
+  --color-barBGbg: #b62e00;
+  --color-barSP: #f9d500;
 }
 
 body {
-  background-image: url(/fourwordconnectbg.svg);
+  background-image: url(/fourwordmatchbgthanks.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-attachment: fixed;
